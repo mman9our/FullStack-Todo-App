@@ -1,0 +1,250 @@
+:root {
+    --color-white: #ffffff;
+    --color-light: #f0eff5;
+    --color-gray-light: #86848c;
+    --color-gray-dark: #56555e;
+    --color-dark: #27282f;
+    --color-primary: #3bc4a1;
+    --color-success: rgb(34, 202, 75);
+    --color-danger: rgb(255, 67, 54);
+    --color-warning: rgb(234, 181, 7);
+    --color-purple: #3bc4a1;
+
+    --color-primary-light: rgba(18, 169, 126, 0.2);
+    --color-success-light: #22ca4b33;
+    --color-danger-light: rgba(255, 67, 54, 0.2);
+    --color-purple-light: #a063f533;
+
+    --card-padding: 1.6rem;
+    --padding-1: 1rem;
+    --padding-2: 8px;
+
+    --card-border-radius: 1.6rem;
+    --border-raduis-1: 1rem;
+    --border-raduis-2: 6px;
+}
+
+/* DARK THEME VARIBLES */
+.dark-theme {
+    --color-white: #131313;
+    --color-light: #23232a;
+    --color-dark: #ddd;
+    --color-gray-dark: #adacb5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    border: 0;
+    appearance: none;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 12px;
+}
+
+body {
+    background-color: var(--color-light);
+    font-family: poppins, sans-serif;
+    min-height: 100vh;
+    color: var(--color-dark);
+}
+
+/*=============== 🗽REUSABLE CSS CLASSES🗽 ===============*/
+img {
+    width: 100%;
+}
+
+h1 {
+    font-size: 2.2rem;
+}
+
+h2 {
+    font-size: 1.2rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+h4 {
+    font-size: 1rem;
+}
+
+h5 {
+    font-size: 0.68rem;
+    font-weight: 500;
+}
+
+h6 {
+    font-size: 7.6rem;
+}
+
+p {
+    font-size: 0.86rem;
+    color: var(--color-gray-dark);
+}
+
+small {
+    font-weight: 300;
+    font-size: 0.77rem;
+}
+
+.text-muted {
+    color: var(--color-gray-light);
+}
+
+.primary {
+    color: var(--color-primary);
+}
+
+.danger {
+    color: var(--color-danger);
+}
+
+.success {
+    color: var(--color-success);
+}
+
+.purple {
+    color: var(--color-purple)
+}
+
+.bg-primary {
+    background: var(--color-primary);
+    box-shadow: 0 0.8rem 0.8rem var(--color-primary-light);
+}
+
+.bg-danger {
+    background: var(--color-danger);
+    box-shadow: 0 0.8rem 0.8rem var(--color-danger-light);
+}
+
+.bg-success {
+    background: var(--color-success);
+    box-shadow: 0 0.8rem 0.8rem var(--color-success-light);
+
+}
+
+.bg-purple {
+    background: var(--color-purple);
+    box-shadow: 0 0.8rem 0.8rem var(--color-purple-light);
+}
+
+.bg-dark {
+    background: #27282f;
+    box-shadow: 0 0.8rem 0.8rem rgba(0, 0, 0, 0.2);
+}
+
+.bg-purple-light {
+    background: var(--color-purple-light);
+}
+
+.bg-danger-light {
+    background: var(--color-danger-light);
+}
+
+.bg-primary-light {
+    background: var(--color-purple-light);
+}
+
+.bg-success-light {
+    background: var(--color-success-light);
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 16rem auto 30rem;
+    gap: 2rem;
+    width: 96%;
+    margin: 1rem auto 4rem;
+}
+
+
+/*==================== MEDIA QUERIS FOR TABLETS  ==================== */
+@media screen and (max-width: 1400px) {
+
+    .profile-area {
+        gap: 2rem;
+    }
+
+    nav .profile-area button#menu-btn {
+        display: inline;
+        background: transparent;
+        color: var(--color-dark);
+    }
+
+    .main {
+        grid-template-columns: 1fr;
+    }
+
+    aside {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 3;
+        background: var(--color-white);
+        width: 22rem;
+        height: 100vh;
+        box-shadow: 2rem 0 2rem var(--color-primary-light);
+        display: none;
+    }
+
+    aside button#close-btn {
+        display: inline-block;
+        width: 3rem;
+        height: 3rem;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        z-index: 4;
+        background: transparent;
+        color: var(--color-dark);
+    }
+
+    button:hover {
+        cursor: pointer;
+    }
+
+     aside .sidebar {
+        margin-top: 4rem;
+    }
+
+     aside .updates {
+        display: none;
+    }
+
+     section.right .recent-list {
+        margin-top: 3rem;
+    }
+}
+
+/*==================== MEDIA QUERIS FOR MOBILES PHONES  ==================== */
+@media screen and (max-width: 600px) {
+    nav .profile-area {
+        gap: 2.6rem;
+    }
+
+    nav .profile h5,
+    nav .profile span {
+        display: none;
+    }
+
+    section.middle .empty-image img {
+        width: 20rem;
+    }
+
+    section.right {
+        margin: 0 .1rem;
+    }
+    
+}
+
+
+
+
+

@@ -1,0 +1,71 @@
+
+.recent-list {
+    margin-top: 2rem;
+}
+
+.recent-list .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.recent-list .header a {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: var(--color-primary);
+}
+
+.recent-list img {
+    width: 2.2rem;
+}
+
+.recent-list .list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem var(--card-padding);
+    border-radius: var(--card-border-radius);
+    transition: all 300ms ease;
+}
+
+.recent-list .list-item:hover {
+    background: var(--color-white);
+    cursor: pointer;
+}
+
+.recent-list .list-item .service {
+    display: flex;
+    gap: 1rem;
+}
+
+.recent-list .list-item .service .icon {
+    padding: var(--padding-2);
+    border-radius: var(--border-raduis-1);
+    display: flex;
+    align-items: center;
+}
+
+.recent-list .card-details {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.recent-list .card-details .card {
+    display: flex;
+    width: 5.5rem;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-raduis-2);
+}
+
+.recent-list .card-details p {
+    color: var(--color-white);
+}
+
+.recent-list .card-details .details p {
+    color: var(--color-dark);
+}
+
