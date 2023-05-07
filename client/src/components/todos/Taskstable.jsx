@@ -55,7 +55,6 @@ function Taskstable() {
           Swal.showValidationMessage("Task title cannot be empty");
           return;
         }
-  
         try {
           const response = await fetch("http://localhost:4000/todos", {
             method: "POST",
@@ -85,16 +84,16 @@ function Taskstable() {
       },
     });
   };
-  
+
   const handleToggleDone = async (updatedTask) => {
     try {
-      const response = await fetch(`/todos/${updatedTask.id}`, {
+      const response = await fetch(`http://localhost:4000/todos/${updatedTask.id}`, {
         method: "PUT",
       });
       if (response.ok) {
         setTasks((prevTasks) => {
           const updatedTasks = prevTasks.map((task) =>
-            task.id === updatedTask.id ? { ...task, isDone: true } : task
+            task.id === updatedTask.id ? { ...task, isDone: !task.isDone } : task
           );
           setFilteredTasks(updatedTasks);
           return updatedTasks;
@@ -110,6 +109,9 @@ function Taskstable() {
       });
     }
   };
+  
+  
+  
 
   // Filter the tasks array based on a search query, and update the filteredTasks array
   const handleSearch = (searchValue) => {
@@ -143,7 +145,6 @@ function Taskstable() {
   
   // Determine the text to display on the toggle button based on the state of the "showAllTasks" variable
   const toggleLabel = showAllTasks ? "Hide All Tasks" : "Show All Tasks";
-  
   return (
     <>
       <div className="center-div">
@@ -185,7 +186,7 @@ function Taskstable() {
               <TaskCard
                 key={task.id}
                 task={task}
-                onToggleDone={handleToggleDone}
+                onToggleDone={() => handleToggleDone(task)}
               />
             ))}
           </div>
