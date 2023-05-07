@@ -6,29 +6,15 @@ import SearchTodos from "./SearchTodos";
 import ReactSwitch from "react-switch";
 
 function Taskstable() {
-
-  // Define state variables for tasks, filtered tasks, and show all tasks
   const [tasks, setTasks] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [showAllTasks, setShowAllTasks] = useState(true);
 
-  // Calculate the number of completed, current, and total tasks using the tasks array
-  const completedTasks = tasks.filter(task => task.isDone).length;
-  const currentTasks = tasks.filter(task => !task.isDone).length;
+  const completedTasks = tasks.filter((task) => task.isDone).length;
+  const currentTasks = tasks.filter((task) => !task.isDone).length;
   const totalTasks = tasks.length;
-
-  // Load saved tasks from localStorage when the component is mounted
-  useEffect(() => {
-    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
-    if (savedTasks) {
-      setTasks(savedTasks);
-      setFilteredTasks(savedTasks);
-    }
-  }, []);
-
-  // Open a prompt to add a new task, and add it to the tasks array when submitted
-  const handleAddTask = () => {
-    Swal.fire({
+  const handleAddTask = async () => {
+    const taskTitle = await Swal.fire({
       title: "Enter task title",
       input: "text",
       inputPlaceholder: "Task title",
@@ -38,38 +24,65 @@ function Taskstable() {
       showCancelButton: true,
       confirmButtonText: "Add task",
       showLoaderOnConfirm: true,
-      preConfirm: (taskTitle) => {
+      preConfirm: async (taskTitle) => {
         if (!taskTitle || taskTitle.trim() === "") {
           Swal.showValidationMessage("Task title cannot be empty");
-        } else {
-          // Create a new task object 
-          const newTask = {
-            id: Math.random().toString(),
-            title: taskTitle,
-            isDone: false,
-          };
-          // Add the new task to both the tasks and filteredTasks arrays
+          return;
+        }
+  
+        try {
+          const response = await fetch("http://localhost:4000/todos", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ title: taskTitle, isDone: false }),
+          });
+  
+          if (!response.ok) {
+            throw new Error("Failed to add task");
+          }
+  
+          const data = await response.json();
+          const newTask = { id: data.id, title: taskTitle, isDone: false };
           setTasks([...tasks, newTask]);
           setFilteredTasks([...tasks, newTask]);
-          // Save the updated tasks array to localStorage
           localStorage.setItem("tasks", JSON.stringify([...tasks, newTask]));
+        } catch (error) {
+          console.error(error);
+          Swal.fire({
+            icon: "error",
+            title: "Failed to add task",
+            text: "An error occurred while adding the task. Please try again.",
+          });
         }
       },
     });
   };
-
-  // Toggle the isDone property of an existing task, and update the tasks and filteredTasks arrays accordingly
-  const handleToggleDone = (updatedTask) => {
-    // Find the index of the updated task in the tasks array
-    const index = tasks.findIndex((task) => task.id === updatedTask.id);
-    // Create a copy of the tasks array with the updated task
-    const updatedTasks = [...tasks];
-    updatedTasks[index] = updatedTask;
-    // Update the tasks and filteredTasks arrays with the updated tasks array
-    setTasks(updatedTasks);
-    setFilteredTasks(updatedTasks);
-    // Save the updated tasks array to localStorage
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  
+  const handleToggleDone = async (updatedTask) => {
+    try {
+      const response = await fetch(`/todos/${updatedTask.id}`, {
+        method: "PUT",
+      });
+      if (response.ok) {
+        setTasks((prevTasks) => {
+          const updatedTasks = prevTasks.map((task) =>
+            task.id === updatedTask.id ? { ...task, isDone: true } : task
+          );
+          setFilteredTasks(updatedTasks);
+          return updatedTasks;
+        });
+      } else {
+        throw new Error("Failed to update task");
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message,
+      });
+    }
   };
 
   // Filter the tasks array based on a search query, and update the filteredTasks array
