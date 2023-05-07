@@ -7,6 +7,17 @@ app.use(cors());
 
 
 
+// GET /todos - Get all available todos
+app.get("/", async (req, res) => {
+  try {
+    const snapshot = await todosRef.get();
+    const todos = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    res.send(todos);
+  } catch (error) {
+    console.error("Error fetching todos:", error);
+    res.status(500).send({ error: "Failed to fetch todos" });
+  }
+});
 
 // POST /todos - Add a new todo
 app.post("/todos", async (req, res) => {
@@ -19,7 +30,6 @@ app.post("/todos", async (req, res) => {
     res.status(500).send({ error: "Failed to add todo" });
   }
 });
-
 
 
 app.listen(4000, () => console.log("Up & RUnning *4000"));

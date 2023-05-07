@@ -13,6 +13,32 @@ function Taskstable() {
   const completedTasks = tasks.filter((task) => task.isDone).length;
   const currentTasks = tasks.filter((task) => !task.isDone).length;
   const totalTasks = tasks.length;
+
+    // Load saved tasks from the server when the component is mounted
+  useEffect(() => {
+    const fetchTodos = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/");
+        if (!response.ok) {
+          throw new Error("Failed to fetch todos");
+        }
+        const todos = await response.json();
+        setTasks(todos);
+        setFilteredTasks(todos);
+      } catch (error) {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Failed to fetch todos",
+          text: "An error occurred while fetching the todos. Please try again.",
+        });
+      }
+    };
+
+    fetchTodos();
+  }, []);
+
+
   const handleAddTask = async () => {
     const taskTitle = await Swal.fire({
       title: "Enter task title",
